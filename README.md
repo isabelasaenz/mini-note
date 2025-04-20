@@ -75,7 +75,7 @@ O objetivo do mini-note é proporcionar uma experiência fluida para estudantes 
 11. Como estudante, quero criar uma conta no Mini-note para salvar minhas notas de forma segura na nuvem.
 
     - Critérios de aceitação:
-      - Formulário de registro com email e senha
-      - Validação de dados do formulário
+      - Registro por rede social
+      - Sincronização em tempo real
       - Confirmação por email
       - Feedback visual do processo
