@@ -6,7 +6,8 @@ import {usePathname} from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import {useMediaQuery} from "usehooks-ts";
 import { UserItem } from "./user_item";
-
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -17,6 +18,7 @@ export const Navigation = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setCollapsed] = useState(isMobile);
     const [isExpanded, setIsExpanded] = useState(false);
+    const notes = useQuery(api.notes.get);
 
     useEffect(() => {
         setCollapsed(isMobile);
@@ -105,7 +107,11 @@ export const Navigation = () => {
                 </div>
                 <div className="mt-4">
                     <p>
-                       Documents 
+                       {notes?.map((note) => (
+                        <p key={note._id}>
+                            {note.title}
+                        </p>
+                       ))} 
                     </p>
                 </div>
                 <div 
