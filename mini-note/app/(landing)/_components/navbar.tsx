@@ -15,7 +15,7 @@ export const Navbar = () => {
     const scrolled = useScrollTop();
     return ( 
         <div className={cn(
-            "z-50 bg-background fixed top-0 flex items-center w-full p-5 border-b",
+            "z-50 bg-background fixed top-0 flex items-center w-full p-5 border-b dark:bg-[#1f1f1f]",
             //scrolled && "border-b shadow-sm"
         )}>
             <Logo/>
@@ -26,20 +26,15 @@ export const Navbar = () => {
                 {!isAuthenticated && !isLoading && (
                     <>
                         <SignInButton mode="modal">
-                            <Button variant="ghost" size="sm">
+                            <Button size="sm">
                                 Log in
                             </Button>
-                        </SignInButton>
-                        <SignInButton mode="modal">
-                            <Button size="sm">
-                                Get mini-note
-                            </Button>
-                        </SignInButton>                 
+                        </SignInButton>             
                     </>
                 )}
                 {isAuthenticated && !isLoading && (
                     <>
-                        <Button variant="ghost" size="sm" asChild>
+                        <Button  size="sm" asChild>
                             <Link href="/notes">
                                 Enter mini-note
                                 <ArrowRight className="h-4 w-4 ml-2" />

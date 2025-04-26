@@ -1,3 +1,4 @@
+import {Toaster} from "sonner"
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Rubik } from "next/font/google";
@@ -41,6 +42,7 @@ export default function RootLayout({
             disableTransitionOnChange
             storageKey="mini-note-theme-2"
           >
+            <Toaster position="bottom-center"/>
             {children}
         </ThemeProvider>
         </ConvexClientProvider>
