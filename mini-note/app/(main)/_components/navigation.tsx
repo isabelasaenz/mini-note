@@ -1,13 +1,16 @@
 "use client";
 
 import {cn} from "@/lib/utils";
-import {ChevronsLeft, MenuIcon} from "lucide-react";
+import {ChevronsLeft, MenuIcon, PlusCircle, Search, Settings} from "lucide-react";
 import {usePathname} from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import {useMediaQuery} from "usehooks-ts";
 import { UserItem } from "./user_item";
-import { useQuery } from "convex/react";
+import { useMutation} from "convex/react";
 import { api } from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner";
+import { NoteList } from "./note_list";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -18,7 +21,7 @@ export const Navigation = () => {
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setCollapsed] = useState(isMobile);
     const [isExpanded, setIsExpanded] = useState(false);
-    const notes = useQuery(api.notes.get);
+    const create = useMutation(api.notes.create);
 
     useEffect(() => {
         setCollapsed(isMobile);
@@ -83,18 +86,26 @@ export const Navigation = () => {
         }
     };
     
+    const handleCreate = () => {
+        const promise = create({title: "Untitled"});
+        toast.promise(promise,{
+            loading: "Creating...",
+            success: "New note created",
+            error: "Failed to create note"
+        });
+    };
 
     return ( 
         <>
             <aside ref={sidebarRef} 
                 className={cn(
-                    "group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[9999]",
+                    "group/sidebar h-full bg-neutral-800 text-neutral-200 overflow-y-auto relative flex w-60 flex-col z-[9999]",
                     isResetting && "transition-all ease-in-out duration-300",
                     isMobile && "w-0"
                 )}>
                 <div role="button" 
                     className={cn(
-                        "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-300 dark:hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
+                        "h-6 w-6 text-muted-foreground rounded-sm hover:bg-neutral-600 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
                         isMobile && "opacity-100"
 
                     )}
@@ -104,15 +115,25 @@ export const Navigation = () => {
                 </div>
                 <div>
                     <UserItem/>
+                    <Item  
+                        label="Settings" 
+                        icon={Settings}
+                        onClick={()=>{}}
+                    />
+                    <Item
+                        label="Search"
+                        icon={Search}
+                        isSearch
+                        onClick={()=>{}}
+                    />
+                    <Item 
+                        onClick={handleCreate} 
+                        label="New note" 
+                        icon={PlusCircle}
+                    />
                 </div>
                 <div className="mt-4">
-                    <p>
-                       {notes?.map((note) => (
-                        <p key={note._id}>
-                            {note.title}
-                        </p>
-                       ))} 
-                    </p>
+                    <NoteList/>
                 </div>
                 <div 
                     onMouseDown={handleMouseDown}

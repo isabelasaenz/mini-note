@@ -10,7 +10,7 @@ export const UserItem = () => {
     return ( 
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <div role="button" className="flex items-center text-sm p-3 w-full hover:bg-primary/5">
+                <div role="button" className="flex items-center text-sm p-3 w-full hover:bg-neutral-600">
                     <div className="gap-x-2 flex items-center max-w-[150px">
                         <Avatar className="h-5 w-5">
                             <AvatarImage src={user?.imageUrl}/>
@@ -22,8 +22,8 @@ export const UserItem = () => {
                     <ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4"/>
                 </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-10  z-[10000]" align="start" alignOffset={11} forceMount>
-                <DropdownMenuItem className="w-full cursor-pointer text-muted-foreground" asChild>
+            <DropdownMenuContent className="w-10  z-[10000] bg-neutral-700 text-neutral-300 border-0" align="start" alignOffset={11} forceMount>
+                <DropdownMenuItem className="w-full cursor-pointer bg-neutral-700 hover:bg-neutral-700 hover:text-neutral-200 transition-colors asChild">
                     <SignOutButton>
                         Log Out
                     </SignOutButton>
