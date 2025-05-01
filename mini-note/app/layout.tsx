@@ -5,6 +5,7 @@ import { Rubik } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider"
 import "./globals.css";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html lang="en" className={rubik.variable} suppressHydrationWarning>
       <body>
         <ConvexClientProvider>
+
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -43,6 +45,7 @@ export default function RootLayout({
             storageKey="mini-note-theme-2"
           >
             <Toaster position="bottom-center"/>
+            <ModalProvider/>
             {children}
         </ThemeProvider>
         </ConvexClientProvider>

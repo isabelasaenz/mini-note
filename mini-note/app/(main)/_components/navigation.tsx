@@ -2,7 +2,7 @@
 
 import {cn} from "@/lib/utils";
 import {ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash} from "lucide-react";
-import {usePathname} from "next/navigation";
+import {useParams, usePathname} from "next/navigation";
 import React, { useRef, useState, useEffect } from "react";
 import {useMediaQuery} from "usehooks-ts";
 import { UserItem } from "./user_item";
@@ -13,17 +13,23 @@ import { toast } from "sonner";
 import { NoteList } from "./note_list";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
 import { TrashBox } from "./trash_box";
+import { useSearch } from "@/hooks/use-search";
+import { useSettings } from "@/hooks/use-settings";
+import { Navbar } from "./navbar";
 
 export const Navigation = () => {
     const pathname = usePathname();
     const isMobile = useMediaQuery("(max-width: 768px)");
-    const sidebarRef = useRef<HTMLElement | null>(null); // Use HTMLElement for "aside"
-    const navbarRef = useRef<HTMLDivElement | null>(null); // Use HTMLDivElement for "div"
+    const sidebarRef = useRef<HTMLElement | null>(null); 
+    const navbarRef = useRef<HTMLDivElement | null>(null); 
     const isResizingRef = useRef(false);
     const [isResetting, setIsResetting] = useState(false);
     const [isCollapsed, setCollapsed] = useState(isMobile);
     const [isExpanded, setIsExpanded] = useState(false);
     const create = useMutation(api.notes.create);
+    const search = useSearch();
+    const settings = useSettings();
+    const params = useParams();
 
     useEffect(() => {
         setCollapsed(isMobile);
@@ -97,6 +103,23 @@ export const Navigation = () => {
         });
     };
 
+    const resetWidth = () => {
+        if (!sidebarRef.current || !navbarRef.current) return;
+
+        setCollapsed(false);
+        setIsResetting(true);
+
+        sidebarRef.current.style.width = isMobile ? "100%" : "240px";
+        navbarRef.current.style.setProperty(
+            "width",
+            isMobile ? "0" : "calc(100% - 240px)"
+        );
+
+        navbarRef.current.style.setProperty("left", isMobile ? "100%" : "240px");
+
+        setTimeout(() => setIsResetting(false), 300);
+    };
+
     return ( 
         <>
             <aside ref={sidebarRef} 
@@ -120,13 +143,13 @@ export const Navigation = () => {
                     <Item  
                         label="Settings" 
                         icon={Settings}
-                        onClick={()=>{}}
+                        onClick={settings.onOpen}
                     />
                     <Item
                         label="Search"
                         icon={Search}
                         isSearch
-                        onClick={()=>{}}
+                        onClick={search.onOpen}
                     />
                     <Item 
                         onClick={handleCreate} 
@@ -160,9 +183,17 @@ export const Navigation = () => {
                     isMobile && "left-0 w-full"
                 )}
             >
-                <nav className="bg-transparent px-3 py-3 w-full">
-                    {isCollapsed && <MenuIcon onClick={expandSidebar} role="button" className="h-6 w-6 text-muted-foreground"/>}
-                </nav>
+                {!!params.noteId ? (
+                    <Navbar 
+                        isCollapsed={isCollapsed}
+                        onResetWidth={resetWidth}
+                    />
+                ) : (
+                    <nav className="bg-transparent px-3 py-3 w-full">
+                        {isCollapsed && <MenuIcon onClick={expandSidebar} role="button" className="h-6 w-6 text-muted-foreground"/>}
+                    </nav>
+                )}
+
             </div>
         </>
      );
