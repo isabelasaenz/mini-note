@@ -10,9 +10,8 @@ const font = Rubik({
 export const Logo = () => {
     return ( 
         <div className="hidden md:flex items-center gap-x-2">
-            <Image src="/notepad_black.png" height="40" width="40" alt="Logo" className="dark:hidden"/>
-            <Image src="/notepad_white.png" height="40" width="40" alt="Logo" className="hidden dark:block"/>
-            <p className={cn("font-semibold", font.className)}>
+            <Image src="/notepad_white.png" height="40" width="40" alt="Logo"/>
+            <p className={cn("font-semibold text-neutral-200", font.className)}>
                 mini-note
             </p>
         </div>

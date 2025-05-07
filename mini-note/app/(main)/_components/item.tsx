@@ -110,13 +110,6 @@ export const Item = ({
             <span>
                 {label}
             </span>
-            {isSearch && (
-                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-note items-center gap-1 rounder border-0 bg-neutral-700 px-1.5 font-mono text-[10px] font-mediumm text-neutral-300 opacity-100">
-                    <span className="text-xs">
-                        ctrl + k
-                    </span>
-                </kbd>
-            )}
             {!!id && (
                 <div className="ml-auto flex items-center gap-x-2">
                     <DropdownMenu>

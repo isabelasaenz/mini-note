@@ -209,5 +209,98 @@ export const getSearch = query({
         .collect();
 
         return notes;
-    },
+    }
   });
+
+export const getById = query({
+    args: { noteId: v.id("notes") },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        const note = await ctx.db.get(args.noteId);
+
+        if (!note) { 
+            throw new Error("Note not found");
+        }
+
+        if (!identity) { 
+            throw new Error("User not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        if (note.userId !== userId) { 
+            throw new Error("User not authorized");
+        }
+
+        return note;
+    }
+});
+
+export const update = mutation({
+    args: {
+        id: v.id("notes"),
+        title: v.optional(v.string()),
+        content: v.optional(v.string()),
+        coverImage: v.optional(v.string()),
+        icon: v.optional(v.string()),
+        isPublished: v.optional(v.boolean()),
+    },
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw new Error("User not authenticated");
+        }
+
+        const userId = identity.subject;
+
+        const { id, ...data } = args;
+
+        const existingnote = await ctx.db.get(args.id);
+
+        if (!existingnote) {
+            throw new Error("Note note found");
+        }
+
+        if (existingnote.userId !== userId) {
+            throw new Error("User not authorized");
+        }
+
+        const note = await ctx.db.patch(args.id, {
+            ...data,
+        });
+
+        return note;
+    }
+});
+
+export const removeIcon = mutation({
+    args: { id: v.id("notes") }, 
+    handler: async (ctx, args) => {
+        const identity = await ctx.auth.getUserIdentity();
+
+        if (!identity) {
+            throw new Error("User not authenticated.");
+        }
+
+        const userId = identity.subject;
+
+        const existingNote = await ctx.db.get(args.id);  
+
+        if (!existingNote) {
+            throw new Error("Note not found.");
+        }
+
+        if (existingNote.userId !== userId) {
+            throw new Error("User not authorized.");
+        }
+
+        const note = await ctx.db.patch(args.id, {  
+            icon: undefined,
+        });
+
+        return note;
+    },
+});
+  
