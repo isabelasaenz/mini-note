@@ -8,6 +8,7 @@ import { ArrowRight } from "lucide-react";
 import { useScrollTop } from "@/hooks/use-scroll-top";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
+import { ModeToggle } from "@/components/mode-toggle";
 
 export const Navbar = () => {
     const { isAuthenticated, isLoading } = useConvexAuth();
