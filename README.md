@@ -66,13 +66,7 @@ O objetivo do mini-note é proporcionar uma experiência fluida para estudantes 
       - Movimentação de notas entre categorias
       - Visualização por categoria
 
-10. **Como estudante, quero exportar minhas notas para compartilhar ou imprimir.**
-    - Critérios de aceitação:
-      - Opções de exportação
-      - Preservação da formatação
-      - Nomeação do arquivo exportado
-
-11. Como estudante, quero criar uma conta no Mini-note para salvar minhas notas de forma segura na nuvem.
+10. Como estudante, quero criar uma conta no Mini-note para salvar minhas notas de forma segura na nuvem.
 
     - Critérios de aceitação:
       - Registro por rede social
