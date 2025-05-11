@@ -53,12 +53,11 @@ O objetivo do mini-note é proporcionar uma experiência fluida para estudantes 
      - Exibição de links clicáveis
      - Opção de editar links existentes
 
-8. **Como estudante, quero inserir imagens nas minhas notas para incluir diagramas ou outros recursos visuais.**
+8. **Como estudante, quero restaurar notas da lixeira para recuperar conteúdo excluído acidentalmente.**
    - Critérios de aceitação:
-     - Upload de imagens do dispositivo
-     - Redimensionamento de imagens
-     - Posicionamento no texto
-
+      - Acessar a lixeira pelo menu lateral
+      - Visualizar lista de notas excluídas com data de remoção
+      - Opção de "Restaurar" para cada item
 
 9. **Como estudante, quero organizar minhas notas em categorias/pastas para separar disciplinas ou projetos.**
     - Critérios de aceitação:
