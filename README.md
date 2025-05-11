@@ -71,4 +71,3 @@ O objetivo do mini-note é proporcionar uma experiência fluida para estudantes 
       - Registro por rede social
       - Sincronização em tempo real
       - Confirmação por email
-      - Feedback visual do processo
